@@ -19,3 +19,16 @@ It enables users to follow predefined roadmaps or create their own custom plans,
 * **Roadmap**: title, description, *steps*, completed, category
 * **Step**: title, description, order
 * **User**: roadmaps
+
+##### 📌 Endpoints
+
+* Authentication
+* Roadmaps
+* Steps
+
+##### 💭 Considerations
+
+* SQLite default database (postgresql in further versions)
+* API versioning
+* Authentication and Authorization (devise gem)
+* Token-based authentication
