@@ -11,3 +11,11 @@ It enables users to follow predefined roadmaps or create their own custom plans,
 * **CRUD Operations for Roadmaps and Steps**: Create, Read, Update, and Delete roadmaps and individual steps
 * **Default Roadmaps**: Preloaded with industry-standard roadmaps
 * **Progress Tracking**: Mark steps as completed and track overall progress.
+
+### 💻 Technical Overview
+
+##### 🤖 Models
+
+* **Roadmap**: title, description, *steps*, completed, category
+* **Step**: title, description, order
+* **User**: roadmaps
