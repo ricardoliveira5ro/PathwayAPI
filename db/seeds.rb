@@ -7,3 +7,16 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Roadmap.create([
+  {
+    title: "Test",
+    description: "Test description",
+    category: "test category"
+  },
+  {
+    title: "2nd Test",
+    description: "Second Test description",
+    category: "test category"
+  }
+])
