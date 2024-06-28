@@ -31,5 +31,6 @@ test:
 production:
   <<: *default
   database: pathway_api_production
-  username: pathway_api
+  username: <%= ENV["PATHWAY_API_DATABASE_USERNAME"] %>
   password: <%= ENV["PATHWAY_API_DATABASE_PASSWORD"] %>
+  host: <%= ENV["PATHWAY_API_DATABASE_HOST"] %>
