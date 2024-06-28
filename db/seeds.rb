@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Roadmap.create([
+roadmaps = [
   {
     title: "Test",
     description: "Test description",
@@ -19,4 +19,11 @@ Roadmap.create([
     description: "Second Test description",
     category: "test category"
   }
-])
+]
+
+roadmaps.each do |roadmap|
+  Roadmap.find_or_create_by(title: roadmap[:title]) do |r|
+    r.description = roadmap[:description]
+    r.category = roadmap[:category]
+  end
+end
