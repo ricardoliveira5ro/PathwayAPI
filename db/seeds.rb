@@ -19,6 +19,11 @@ roadmaps = [
     description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You’ll explore various programming languages, frameworks, and tools to build robust and scalable server applications.",
     category: "Roles"
   },
+  {
+    title: "Java Developer",
+    description: "Roadmap for becoming a proficient Java developer, covering core Java, frameworks, and tools."
+    category: "Skills"
+  },
 ]
 
 roadmaps.each do |roadmap|
