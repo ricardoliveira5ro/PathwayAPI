@@ -10,15 +10,15 @@
 
 roadmaps = [
   {
-    title: "Test",
-    description: "Test description",
-    category: "test category"
+    title: "Frontend Developer",
+    description: "Comprehensive guide to becoming a frontend developer, including HTML, CSS, JavaScript, and frameworks.",
+    category: "Roles"
   },
   {
-    title: "2nd Test",
-    description: "Second Test description",
-    category: "test category"
-  }
+    title: "Backend Developer",
+    description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You’ll explore various programming languages, frameworks, and tools to build robust and scalable server applications.",
+    category: "Roles"
+  },
 ]
 
 roadmaps.each do |roadmap|
