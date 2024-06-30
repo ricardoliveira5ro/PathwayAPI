@@ -1,12 +1,6 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Delete all records and reset ids
+Roadmap.delete_all
+ActiveRecord::Base.connection.reset_pk_sequence!('roadmaps')
 
 roadmaps = [
   {
@@ -16,19 +10,16 @@ roadmaps = [
   },
   {
     title: "Backend Developer",
-    description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You’ll explore various programming languages, frameworks, and tools to build robust and scalable server applications.",
+    description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You'll explore various programming languages, frameworks, and tools to build robust and scalable server applications.",
     category: "Roles"
   },
   {
     title: "Java Developer",
-    description: "Roadmap for becoming a proficient Java developer, covering core Java, frameworks, and tools."
+    description: "Roadmap for becoming a proficient Java developer, covering core Java, frameworks, and tools.",
     category: "Skills"
-  },
+  }
 ]
 
 roadmaps.each do |roadmap|
-  Roadmap.find_or_create_by(title: roadmap[:title]) do |r|
-    r.description = roadmap[:description]
-    r.category = roadmap[:category]
-  end
+  Roadmap.create(roadmap)
 end
