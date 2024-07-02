@@ -16,7 +16,8 @@ It enables users to follow predefined roadmaps or create their own custom plans,
 
 ##### 🤖 Models
 
-* **Roadmap**: title, description, *steps*, completed, category
+* **Roadmap**: title, description, *steps*, completed
+* **Category**: name
 * **Step**: title, description, order
 * **User**: roadmaps
 
@@ -28,7 +29,7 @@ It enables users to follow predefined roadmaps or create their own custom plans,
 
 ##### 💭 Considerations
 
-* SQLite default database (postgresql in further versions)
+* Postgres database
 * API versioning
 * Authentication and Authorization (devise gem)
 * Token-based authentication
