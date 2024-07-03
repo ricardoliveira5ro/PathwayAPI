@@ -1,4 +1,6 @@
 class Api::V1::RoadmapsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     roadmaps = Roadmap.all
     render json: roadmaps, status: 200
@@ -19,7 +21,7 @@ class Api::V1::RoadmapsController < ApplicationController
       params.require(:roadmap).permit(
         :title, 
         :description, 
-        :category
+        category_ids: []
     )
     end
 end
