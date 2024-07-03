@@ -1,4 +1,4 @@
 class RoadmapSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :created_at, :updated_at
+  attributes :id, :title, :description, :user_id
   has_many :categories
 end

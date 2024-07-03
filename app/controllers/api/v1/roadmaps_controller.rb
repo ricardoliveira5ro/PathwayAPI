@@ -16,6 +16,19 @@ class Api::V1::RoadmapsController < ApplicationController
     end
   end
 
+  def create
+    roadmap = Roadmap.new(roadmap_params)
+    roadmap.user_id = current_user.id
+
+    if params[:roadmap][:category_ids].present? && roadmap.save 
+      roadmap.category_ids = params[:roadmap][:category_ids]
+
+      render json: roadmap, status: :created
+    else
+      render json: { errors: roadmap.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
     def roadmap_params
       params.require(:roadmap).permit(
