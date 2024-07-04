@@ -17,12 +17,17 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def create
+    params[:roadmap][:category_ids].each do |category_id|
+      if !Category.exists?(category_id)
+        render json: { error: "Category #{category_id} not found" }, status: :not_found
+        return
+      end
+    end
+
     roadmap = Roadmap.new(roadmap_params)
     roadmap.user_id = current_user.id
 
-    if params[:roadmap][:category_ids].present? && roadmap.save 
-      roadmap.category_ids = params[:roadmap][:category_ids]
-
+    if roadmap.save
       render json: roadmap, status: :created
     else
       render json: { errors: roadmap.errors.full_messages }, status: :unprocessable_entity
