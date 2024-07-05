@@ -2,7 +2,7 @@ class Api::V1::RoadmapsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    roadmaps = Roadmap.all
+    roadmaps = Roadmap.where(user_id: [current_user.id, nil])
     render json: roadmaps, status: 200
   end
 
