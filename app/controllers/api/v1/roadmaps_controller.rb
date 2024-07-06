@@ -12,14 +12,18 @@ class Api::V1::RoadmapsController < ApplicationController
     if roadmap
       render json: roadmap, status: 200
     else
-      render json: { error: "Roadmap not found" }
+      render json: { 
+        status: { code: 404, message: "Roadmap not found" }
+      }, status: :not_found
     end
   end
 
   def create
     params[:roadmap][:category_ids].each do |category_id|
       if !Category.exists?(category_id)
-        render json: { error: "Category #{category_id} not found" }, status: :not_found
+        render json: { 
+          status: { code: 404, message: "Category #{category_id} not found" }
+        }, status: :not_found
         return
       end
     end
