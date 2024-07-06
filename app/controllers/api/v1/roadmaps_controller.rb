@@ -2,12 +2,12 @@ class Api::V1::RoadmapsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    roadmaps = Roadmap.where(user_id: [current_user.id, nil])
+    roadmaps = getUserRoadmaps()
     render json: roadmaps, status: 200
   end
 
   def show
-    roadmap = Roadmap.find_by(id: params[:id])
+    roadmap = getUserRoadmaps().find_by(id: params[:id])
 
     if roadmap
       render json: roadmap, status: 200
@@ -45,5 +45,9 @@ class Api::V1::RoadmapsController < ApplicationController
         :description, 
         category_ids: []
     )
+    end
+
+    def getUserRoadmaps
+      Roadmap.where(user_id: [current_user.id, nil])
     end
 end
