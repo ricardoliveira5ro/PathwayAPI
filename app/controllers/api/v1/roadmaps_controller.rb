@@ -2,12 +2,12 @@ class Api::V1::RoadmapsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    roadmaps = getUserRoadmaps()
+    roadmaps = Roadmap.all
     render json: roadmaps, status: 200
   end
 
   def show
-    roadmap = getUserRoadmaps().find_by(id: params[:id])
+    roadmap = Roadmap.find_by(id: params[:id])
 
     if roadmap
       render json: roadmap, status: 200
@@ -38,6 +38,30 @@ class Api::V1::RoadmapsController < ApplicationController
     end
   end
 
+  def destroy
+    id = params[:id]
+    roadmap = Roadmap.find_by(id: id)
+
+    if !roadmap
+      render json: { 
+        status: { code: 404, message: "Roadmap not found" }
+      }, status: :not_found
+      return
+    end
+
+    if roadmap.user_id != current_user.id
+      render json: { 
+        status: { code: 403, message: "Cannot perfom this operation, roadmap created by other user" }
+      }, status: :forbidden
+      return
+    end
+
+    roadmap.destroy
+    render json: { 
+      status: { code: 200, message: "Roadmap '#{id}' successfully deleted" }
+    }, status: :ok
+  end
+
   private
     def roadmap_params
       params.require(:roadmap).permit(
@@ -45,9 +69,5 @@ class Api::V1::RoadmapsController < ApplicationController
         :description, 
         category_ids: []
     )
-    end
-
-    def getUserRoadmaps
-      Roadmap.where(user_id: [current_user.id, nil])
     end
 end
