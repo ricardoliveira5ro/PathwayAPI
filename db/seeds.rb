@@ -1,8 +1,8 @@
 # Delete all records
 RoadmapCategory.delete_all
 Category.delete_all
-Roadmap.delete_all
 Step.delete_all
+Roadmap.delete_all
 
 # Reset IDs
 ActiveRecord::Base.connection.reset_pk_sequence!('roadmap_categories')
