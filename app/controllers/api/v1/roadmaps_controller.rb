@@ -38,6 +38,28 @@ class Api::V1::RoadmapsController < ApplicationController
     end
   end
 
+  def update
+    id = params[:id]
+    roadmap = Roadmap.find_by(id: id)
+
+    if !roadmap
+      render json: { 
+        status: { code: 404, message: "Roadmap not found" }
+      }, status: :not_found
+      return
+    end
+
+    if roadmap.user_id != current_user.id
+      render json: { 
+        status: { code: 403, message: "Cannot perfom this operation, roadmap created by other user" }
+      }, status: :forbidden
+      return
+    end
+
+    roadmap.update!(roadmap_params)
+    render json: roadmap, status: :ok
+  end
+
   def destroy
     id = params[:id]
     roadmap = Roadmap.find_by(id: id)
