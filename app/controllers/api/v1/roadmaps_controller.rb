@@ -26,7 +26,8 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def update
-    Roadmap.find(params[:id]).update!(roadmap_params)
+    roadmap = Roadmap.find(params[:id])
+    roadmap.update!(roadmap_params)
 
     render json: roadmap, status: :ok
   end
