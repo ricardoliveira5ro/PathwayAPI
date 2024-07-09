@@ -3,44 +3,37 @@ class Api::V1::RoadmapsController < ApplicationController
   before_action :check_ownership, only: [:update, :destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
 
   def index
     roadmaps = Roadmap.all
+
     render json: roadmaps, status: 200
   end
 
   def show
     roadmap = Roadmap.find(params[:id])
+
     render json: roadmap, status: :ok
   end
 
   def create
     roadmap = Roadmap.new(roadmap_params)
     roadmap.user_id = current_user.id
+    roadmap.save!
 
-    if roadmap.save
-      render json: roadmap, status: :created
-    else
-      render json: { errors: roadmap.errors.full_messages }, status: :unprocessable_entity
-    end
+    render json: roadmap, status: :created
   end
 
   def update
-    roadmap = Roadmap.find(params[:id])
+    Roadmap.find(params[:id]).update!(roadmap_params)
 
-    if roadmap.user_id != current_user.id
-      render json: { 
-        status: { code: 403, message: "Cannot perfom this operation, roadmap created by other user" }
-      }, status: :forbidden
-      return
-    end
-
-    roadmap.update!(roadmap_params)
     render json: roadmap, status: :ok
   end
 
   def destroy
     Roadmap.find(params[:id]).destroy!
+
     render json: { 
       status: { code: 200, message: "Roadmap '#{params[:id]}' successfully deleted" }
     }, status: :ok
@@ -56,14 +49,21 @@ class Api::V1::RoadmapsController < ApplicationController
     end
 
     def record_not_found(error)
-      model_name = error.model.constantize.model_name.human
-      id = error.message[/\d+/]
       render json: { 
         status: { 
           code: 404, 
-          message: "#{model_name} with ID #{id} not found"
+          message: error.message
         }
       }, status: :not_found
+    end
+
+    def record_invalid(error)
+      render json: { 
+        status: { 
+          code: 422, 
+          message: error.record.errors.full_messages
+        }
+      }, status: :unprocessable_entity
     end
 
     def check_ownership
