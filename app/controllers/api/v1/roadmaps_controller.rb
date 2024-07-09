@@ -1,5 +1,8 @@
 class Api::V1::RoadmapsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_ownership, only: [:update, :destroy]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     roadmaps = Roadmap.all
@@ -7,27 +10,11 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def show
-    roadmap = Roadmap.find_by(id: params[:id])
-
-    if roadmap
-      render json: roadmap, status: 200
-    else
-      render json: { 
-        status: { code: 404, message: "Roadmap not found" }
-      }, status: :not_found
-    end
+    roadmap = Roadmap.find(params[:id])
+    render json: roadmap, status: :ok
   end
 
   def create
-    params[:roadmap][:category_ids].each do |category_id|
-      if !Category.exists?(category_id)
-        render json: { 
-          status: { code: 404, message: "Category #{category_id} not found" }
-        }, status: :not_found
-        return
-      end
-    end
-
     roadmap = Roadmap.new(roadmap_params)
     roadmap.user_id = current_user.id
 
@@ -39,15 +26,7 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def update
-    id = params[:id]
-    roadmap = Roadmap.find_by(id: id)
-
-    if !roadmap
-      render json: { 
-        status: { code: 404, message: "Roadmap not found" }
-      }, status: :not_found
-      return
-    end
+    roadmap = Roadmap.find(params[:id])
 
     if roadmap.user_id != current_user.id
       render json: { 
@@ -61,26 +40,9 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def destroy
-    id = params[:id]
-    roadmap = Roadmap.find_by(id: id)
-
-    if !roadmap
-      render json: { 
-        status: { code: 404, message: "Roadmap not found" }
-      }, status: :not_found
-      return
-    end
-
-    if roadmap.user_id != current_user.id
-      render json: { 
-        status: { code: 403, message: "Cannot perfom this operation, roadmap created by other user" }
-      }, status: :forbidden
-      return
-    end
-
-    roadmap.destroy
+    Roadmap.find(params[:id]).destroy!
     render json: { 
-      status: { code: 200, message: "Roadmap '#{id}' successfully deleted" }
+      status: { code: 200, message: "Roadmap '#{params[:id]}' successfully deleted" }
     }, status: :ok
   end
 
@@ -91,5 +53,25 @@ class Api::V1::RoadmapsController < ApplicationController
         :description, 
         category_ids: []
     )
+    end
+
+    def record_not_found(error)
+      model_name = error.model.constantize.model_name.human
+      id = error.message[/\d+/]
+      render json: { 
+        status: { 
+          code: 404, 
+          message: "#{model_name} with ID #{id} not found"
+        }
+      }, status: :not_found
+    end
+
+    def check_ownership
+      render json: { 
+        status: { 
+          code: 403, 
+          message: "Cannot perform this operation, roadmap created by another user" 
+        } 
+      }, status: :forbidden unless Roadmap.find(params[:id]).user_id == current_user.id
     end
 end
