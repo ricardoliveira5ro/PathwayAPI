@@ -52,15 +52,18 @@ steps = {
 roadmaps = [
   {
     title: "Frontend Developer",
-    description: "Comprehensive guide to becoming a frontend developer, including HTML, CSS, JavaScript, and frameworks."
+    description: "Comprehensive guide to becoming a frontend developer, including HTML, CSS, JavaScript, and frameworks.",
+    categories: ["Roles"]
   },
   {
     title: "Backend Developer",
-    description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You'll explore various programming languages, frameworks, and tools to build robust and scalable server applications."
+    description: "Comprehensive guide to becoming a proficient backend developer, focusing on server-side programming, database management, API development, and integration with frontend technologies. You'll explore various programming languages, frameworks, and tools to build robust and scalable server applications.",
+    categories: ["Roles"]
   },
   {
     title: "Java Developer",
-    description: "Roadmap for becoming a proficient Java developer, covering core Java, frameworks, and tools."
+    description: "Roadmap for becoming a proficient Java developer, covering core Java, frameworks, and tools.",
+    categories: ["Skills", "Languages"]
   }
 ]
 
@@ -70,17 +73,12 @@ categories.each do |category|
   created_categories[category[:name]] = Category.create!(category)
 end
 
-# Create roadmaps
+# Create roadmaps with categories
 created_roadmaps = {}
 roadmaps.each do |roadmap|
-  created_roadmaps[roadmap[:title]] = Roadmap.create!(roadmap)
+  roadmap_categories = roadmap.delete(:categories).map { |name| created_categories[name] }
+  created_roadmaps[roadmap[:title]] = Roadmap.create!(roadmap.merge(categories: roadmap_categories))
 end
-
-# Associate roadmaps with categories
-created_roadmaps["Frontend Developer"].categories << created_categories["Roles"]
-created_roadmaps["Backend Developer"].categories << created_categories["Roles"]
-created_roadmaps["Java Developer"].categories << created_categories["Skills"]
-created_roadmaps["Java Developer"].categories << created_categories["Languages"]
 
 # Create and associate steps with roadmaps
 steps.each do |roadmap_title, steps_array|
