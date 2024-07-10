@@ -45,7 +45,8 @@ class Api::V1::RoadmapsController < ApplicationController
       params.require(:roadmap).permit(
         :title, 
         :description, 
-        category_ids: []
+        category_ids: [],
+        steps_attributes: [:title, :description, :order]
     )
     end
 
