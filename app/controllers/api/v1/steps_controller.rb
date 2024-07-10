@@ -1,0 +1,64 @@
+class Api::V1::StepsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_ownership, only: [:create]
+
+  def show
+    step = Step.find(params[:id])
+
+    render json: step, status: :ok
+  end
+
+  def index
+    roadmap = Roadmap.find(params[:roadmap_id])
+    steps = roadmap.steps.order(:order)
+
+    render json: steps, status: :ok
+  end
+
+  def create
+    step = Step.new(step_params)
+    step.roadmap_id = params[:roadmap_id]
+    step.save!
+
+    render json: step, status: :created
+  end
+
+
+
+  private
+
+  def step_params
+    params.require(:step).permit(
+      :title,
+      :description,
+      :order
+    )
+  end
+
+  def record_not_found(error)
+    render json: { 
+      status: { 
+        code: 404, 
+        message: error.message
+      }
+    }, status: :not_found
+  end
+
+  def record_invalid(error)
+    render json: { 
+      status: { 
+        code: 422, 
+        message: error.record.errors.full_messages
+      }
+    }, status: :unprocessable_entity
+  end
+
+  def check_ownership
+    render json: { 
+      status: { 
+        code: 403, 
+        message: "Cannot perform this operation, roadmap created by another user" 
+      } 
+    }, status: :forbidden unless Roadmap.find(params[:roadmap_id]).user_id == current_user.id
+  end
+end

@@ -8,7 +8,7 @@ class Api::V1::RoadmapsController < ApplicationController
   def index
     roadmaps = Roadmap.all
 
-    render json: roadmaps, status: 200
+    render json: roadmaps, status: :ok
   end
 
   def show
@@ -47,7 +47,7 @@ class Api::V1::RoadmapsController < ApplicationController
         :description, 
         category_ids: [],
         steps_attributes: [:title, :description, :order]
-    )
+      )
     end
 
     def record_not_found(error)
