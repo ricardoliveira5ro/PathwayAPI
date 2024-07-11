@@ -14,7 +14,7 @@ Rails.application.routes.draw do
         resources :steps, only: [:index, :create]
       end
       resources :categories, only: [:index, :show]
-      resources :steps, only: [:show]
+      resources :steps, only: [:show, :update, :destroy]
     end
   end
 end

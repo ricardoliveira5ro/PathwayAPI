@@ -23,6 +23,21 @@ class Api::V1::StepsController < ApplicationController
     render json: step, status: :created
   end
 
+  def update
+    step = Step.find(params[:id])
+    step.update!(step_params)
+
+    render json: step, status: :ok
+  end
+
+  def destroy
+    Step.find(params[:id]).destroy!
+
+    render json: { 
+      status: { code: 200, message: "Roadmap '#{params[:id]}' successfully deleted" }
+    }, status: :ok
+  end
+
 
 
   private
