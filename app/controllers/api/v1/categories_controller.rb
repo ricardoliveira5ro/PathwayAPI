@@ -3,18 +3,13 @@ class Api::V1::CategoriesController < ApplicationController
 
   def index
     categories = Category.all
-    render json: categories, status: 200
+
+    render json: categories, status: :ok
   end
 
   def show
     category = Category.find_by(id: params[:id])
 
-    if category
-      render json: category, status: 200
-    else
-      render json: { 
-        status: { code: 404, message: "Category not found" }
-      }, status: :not_found
-    end
+    render json: category, status: :ok
   end
 end
