@@ -35,24 +35,6 @@ class Api::V1::StepsController < ApplicationController
     )
   end
 
-  def record_not_found(error)
-    render json: { 
-      status: { 
-        code: 404, 
-        message: error.message
-      }
-    }, status: :not_found
-  end
-
-  def record_invalid(error)
-    render json: { 
-      status: { 
-        code: 422, 
-        message: error.record.errors.full_messages
-      }
-    }, status: :unprocessable_entity
-  end
-
   def check_ownership
     render json: { 
       status: { 

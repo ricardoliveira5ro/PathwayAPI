@@ -2,9 +2,6 @@ class Api::V1::RoadmapsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_ownership, only: [:update, :destroy]
 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
-
   def index
     roadmaps = Roadmap.all
 
@@ -40,6 +37,8 @@ class Api::V1::RoadmapsController < ApplicationController
     }, status: :ok
   end
 
+
+
   private
     def roadmap_params
       params.require(:roadmap).permit(
@@ -48,24 +47,6 @@ class Api::V1::RoadmapsController < ApplicationController
         category_ids: [],
         steps_attributes: [:title, :description, :order]
       )
-    end
-
-    def record_not_found(error)
-      render json: { 
-        status: { 
-          code: 404, 
-          message: error.message
-        }
-      }, status: :not_found
-    end
-
-    def record_invalid(error)
-      render json: { 
-        status: { 
-          code: 422, 
-          message: error.record.errors.full_messages
-        }
-      }, status: :unprocessable_entity
     end
 
     def check_ownership
