@@ -1,6 +1,6 @@
 class Api::V1::StepsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_ownership, only: [:create]
+  before_action :check_ownership, only: [:create, :batch_steps]
 
   def show
     step = Step.find(params[:id])
@@ -36,6 +36,20 @@ class Api::V1::StepsController < ApplicationController
     render json: { 
       status: { code: 200, message: "Roadmap '#{params[:id]}' successfully deleted" }
     }, status: :ok
+  end
+
+  def batch_steps
+    steps = []
+
+    params.require(:steps).map do |step|
+      created_step = Step.new(step.permit(:title, :description, :order))
+      created_step.roadmap_id = params[:roadmap_id]
+      created_step.save!
+
+      steps.push(created_step)
+    end
+
+    render json: steps, status: :created
   end
 
 
