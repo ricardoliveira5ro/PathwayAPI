@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   }
   namespace :api do
     namespace :v1 do
+      root to: 'base#index' 
+      
       resources :roadmaps, only: [:index, :show, :create, :update, :destroy] do
         resources :steps, only: [:index, :create] do
           post 'batch_steps', on: :collection
