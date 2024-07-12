@@ -4,8 +4,7 @@ PathwayAPI is a robust and flexible API designed to help users create, manage, a
 
 `pathwayapi.onrender.com/api/v1/` hosts a public instance of the API. 
 
-### 🚀 Getting Started
-
-> **IMPORTANT**
+> [!WARNING]
 > The first request may take up to 60 seconds due to tier restrictions. (Next ones will be normalized)
 
+### 🚀 Getting Started
