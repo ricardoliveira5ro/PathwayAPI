@@ -37,6 +37,7 @@ Each endpoint requires previous authentication based on bearer token. This token
 ```
 In the response headers you can see you got your **authorization token** that will be needed in every request you make to the available endpoints.
 <br/><br/>
+
 #### 📍 Endpoints
 
 **GET** /roadmaps <br/>
@@ -108,3 +109,23 @@ In the response headers you can see you got your **authorization token** that wi
 
 ---
 
+## 💻 Technical Details
+
+This section is for the developers who want to explore the technical characteristics of the API.
+
+#### 🛠️ Tech stack
+
+* Ruby (v3)
+* Ruby on rails (v7)
+* Postgresql
+* devise
+* devise-jwt
+
+#### 🚀 Run
+
+* Run `bundle install`
+* Edit your *database.yml* to have your local database information provide by your keys in *credentials.yml.enc*
+* Run `rails db:create` and `rails db:migrate` (every time there is a change in your schema)
+* Edit your *seeds.rb* file to have any preloaded data and run `run db:seed`
+
+#### 💭 Considerations
