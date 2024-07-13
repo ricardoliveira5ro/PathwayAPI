@@ -39,12 +39,12 @@ In the response headers you can see you got your **authorization token** that wi
 
 #### 📍 Endpoints
 
-**GET** /roadmaps
+**GET** /roadmaps <br/>
 **GET** /roadmaps/:id
 
 **DELETE** /roadmaps/:id
 
-**POST** /roadmaps
+**POST** /roadmaps <br/>
 **PUT** /roadmaps/:id
 ```
 {
@@ -64,7 +64,7 @@ In the response headers you can see you got your **authorization token** that wi
 ```
 *steps_attributes* is **optional** and in update action (PUT /:id) it **appends to existent steps**, does not override unlike the other fields
 
-**GET** /roadmaps/:id/steps
+**GET** /roadmaps/:id/steps <br/>
 **POST** /roadmaps/:id/steps
 ```
 {
@@ -89,12 +89,12 @@ In the response headers you can see you got your **authorization token** that wi
 
 ---
 
-**GET** /categories
+**GET** /categories <br/>
 **GET** /categories/:id
 
 ---
 
-**GET** /steps/:id
+**GET** /steps/:id <br/>
 **PUT** /steps/:id
 ```
 {
