@@ -5,7 +5,7 @@ PathwayAPI is a robust and flexible API designed to help users create, manage, a
 `pathwayapi.onrender.com/api/v1/` hosts a public instance of the API. 
 
 > [!WARNING]
-> The first request may take up to 60 seconds due to tier restrictions. (Next ones will be normalized)
+> The first request may take up to 60 seconds due to tier restrictions. (Subsequent requests will be normalized)
 
 ## 🚀 Getting Started
 
@@ -13,7 +13,7 @@ This section will guide you through using PathwayAPI, including how to authentic
 
 #### 🔐 Authentication / Authorization
 
-Each endpoint requires previous authentication based on bearer token. This token can be obtained after sign up and/or login as returned header. The token has 30 days expiration date.
+Each endpoint requires prior authentication based on bearer token. This token can be obtained after signing up and/or logging in as returned header. The token has 30 days expiration date.
 
 **POST** /signup
 ```
@@ -35,7 +35,7 @@ Each endpoint requires previous authentication based on bearer token. This token
     }
 }
 ```
-In the response headers you can see you got your **authorization token** that will be needed in every request you make to the available endpoints.
+In the response headers you will see you got your **authorization token** that will be needed in every request you make to the available endpoints.
 <br/><br/>
 
 #### 📍 Endpoints
@@ -63,7 +63,7 @@ In the response headers you can see you got your **authorization token** that wi
     }
 }
 ```
-*steps_attributes* is **optional** and in update action (PUT /:id) it **appends to existent steps**, does not override unlike the other fields
+*steps_attributes* is **optional** and in update action (PUT /:id) it **appends to existent steps**, it does not override unlike the other fields
 
 **GET** /roadmaps/:id/steps <br/>
 **POST** /roadmaps/:id/steps
@@ -108,6 +108,7 @@ In the response headers you can see you got your **authorization token** that wi
 ```
 
 ---
+<br/><br/>
 
 ## 💻 Technical Details
 
@@ -124,8 +125,11 @@ This section is for the developers who want to explore the technical characteris
 #### 🚀 Run
 
 * Run `bundle install`
-* Edit your *database.yml* to have your local database information provide by your keys in *credentials.yml.enc*
+* Edit your *database.yml* to include your local database information provided by your keys in *credentials.yml.enc*
 * Run `rails db:create` and `rails db:migrate` (every time there is a change in your schema)
-* Edit your *seeds.rb* file to have any preloaded data and run `run db:seed`
+* Edit your *seeds.rb* file to include any preloaded data and run `run db:seed`
 
 #### 💭 Considerations
+
+* Postgre database hosted in *neon.tech*
+* Webservice hosted in *render.com*
