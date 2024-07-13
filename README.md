@@ -36,7 +36,7 @@ Each endpoint requires previous authentication based on bearer token. This token
 }
 ```
 In the response headers you can see you got your **authorization token** that will be needed in every request you make to the available endpoints.
-
+<br/><br/>
 #### 📍 Endpoints
 
 **GET** /roadmaps <br/>
