@@ -6,6 +6,7 @@ PathwayAPI is a robust and flexible API designed to help users create, manage, a
 
 > [!WARNING]
 > The first request may take up to 60 seconds due to tier restrictions. (Subsequent requests will be normalized)
+<br/>
 
 ## 🚀 Getting Started
 
@@ -107,8 +108,7 @@ In the response headers you will see you got your **authorization token** that w
 }
 ```
 
----
-<br/><br/>
+<br/>
 
 ## 💻 Technical Details
 
