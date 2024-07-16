@@ -33,6 +33,7 @@ It enables users to follow predefined roadmaps or create their own custom plans,
 * API versioning
 * Authentication and Authorization (devise gem)
 * Token-based authentication
+* Sanitize inputs (security)
 
 ##### 🚀 Deployment
 
