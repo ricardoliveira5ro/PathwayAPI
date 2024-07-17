@@ -36,7 +36,13 @@ Rails.application.routes.draw do
         delete 'logout', to: 'users/sessions#destroy'
       end
 
-      resources :roadmaps, only: [:index]
+      resources :roadmaps, only: [:index, :show, :create, :update, :destroy] do
+        resources :steps, only: [:index, :create] do
+          post 'batch_steps', on: :collection
+        end
+      end
+      resources :categories, only: [:index, :show]
+      resources :steps, only: [:show, :update, :destroy]
     end
   end
 end
