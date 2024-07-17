@@ -20,5 +20,9 @@ Rails.application.routes.draw do
       resources :categories, only: [:index, :show]
       resources :steps, only: [:show, :update, :destroy]
     end
+
+    namespace :v2 do
+      resources :roadmaps, only: [:index]
+    end
   end
 end
