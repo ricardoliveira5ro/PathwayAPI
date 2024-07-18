@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_082738) do
     t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "completed"
     t.index ["roadmap_id"], name: "index_steps_on_roadmap_id"
   end
 
