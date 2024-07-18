@@ -10,6 +10,12 @@ class Api::V2::TrackerController < ApplicationController
     render json: tracker, status: :created
   end
 
+  def update
+    tracker = Tracker.find_by(user_id: current_user.id, step_id: params[:step_id])
+    tracker.update!(tracker_params)
+
+    render json: tracker, status: :ok
+  end
 
 
   private

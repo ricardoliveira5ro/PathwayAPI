@@ -43,7 +43,9 @@ Rails.application.routes.draw do
       end
       resources :categories, only: [:index, :show]
       resources :steps, only: [:show, :update, :destroy] do
-        resources :tracker, only: [:create]
+        resources :tracker, only: [:create] do
+          put 'update', on: :collection
+        end
       end
     end
   end

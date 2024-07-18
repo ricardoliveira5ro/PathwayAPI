@@ -1,6 +1,6 @@
 class Api::V2::StepsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_ownership, only: [:create, :batch_steps]
+  before_action :check_ownership, only: [:create, :update, :batch_steps]
 
   def show
     step = Step.find(params[:id])
@@ -65,11 +65,15 @@ class Api::V2::StepsController < ApplicationController
   end
 
   def check_ownership
-    render json: { 
-      status: { 
-        code: 403, 
-        message: "Cannot perform this operation, roadmap created by another user" 
-      } 
-    }, status: :forbidden unless Roadmap.find(params[:roadmap_id]).user_id == current_user.id
+    roadmap_id = params[:roadmap_id] || Step.find(params[:id]).roadmap_id
+    
+    unless Roadmap.find(roadmap_id).user_id == current_user.id
+      render json: { 
+        status: { 
+          code: 403, 
+          message: "Cannot perform this operation, roadmap created by another user" 
+        } 
+      }, status: :forbidden
+    end
   end
 end
