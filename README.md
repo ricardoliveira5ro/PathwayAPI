@@ -2,7 +2,7 @@
 
 PathwayAPI is a robust and flexible RESTful API designed to help users create, manage, and track personalized roadmaps for achieving various goals. It enables users to follow predefined roadmaps or create their own custom plans, breaking them down into manageable steps with detailed descriptions, deadlines, and progress tracking.
 
-`pathwayapi.onrender.com/api/v1/` hosts a public instance of the API. 
+`pathwayapi.onrender.com/api/v2/` hosts a public instance of the API. 
 
 > [!WARNING]
 > The first request may take up to 60 seconds due to tier restrictions. (Subsequent requests will be normalized)
@@ -42,6 +42,7 @@ In the response headers you will see you got your **authorization token** that w
 #### 📍 Endpoints
 
 **GET** /roadmaps <br/>
+**GET** /roadmaps?per_page=2&page=1 (paginate response)<br/>
 **GET** /roadmaps/:id
 
 **DELETE** /roadmaps/:id
@@ -108,6 +109,17 @@ In the response headers you will see you got your **authorization token** that w
 }
 ```
 
+---
+
+**POST** /steps/:id/tracker
+```
+{
+    "tracker": {
+        "completed": true
+    }
+}
+```
+
 <br/>
 
 ## 💻 Technical Details
@@ -119,8 +131,9 @@ This section is for the developers who want to explore the technical characteris
 * Ruby (v3)
 * Ruby on rails (v7)
 * Postgresql
-* devise
-* devise-jwt
+* devise (gem)
+* devise-jwt (gem)
+* will_paginate (gem)
 
 #### 🚀 Run
 
@@ -128,6 +141,7 @@ This section is for the developers who want to explore the technical characteris
 * Edit your *database.yml* to include your local database information provided by your keys in *credentials.yml.enc*
 * Run `rails db:create` and `rails db:migrate` (every time there is a change in your schema)
 * Edit your *seeds.rb* file to include any preloaded data and run `run db:seed`
+* Start the server `rails s`
 
 #### 💭 Considerations
 
