@@ -138,6 +138,7 @@ This section is for the developers who want to explore the technical characteris
 #### 🚀 Run
 
 * Run `bundle install`
+* Create the user/role in your local postgres database
 * Edit your *database.yml* to include your local database information provided by your keys in *credentials.yml.enc*
 * Run `rails db:create` and `rails db:migrate` (every time there is a change in your schema)
 * Edit your *seeds.rb* file to include any preloaded data and run `run db:seed`
