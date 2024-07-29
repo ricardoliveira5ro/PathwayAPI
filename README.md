@@ -148,3 +148,4 @@ This section is for the developers who want to explore the technical characteris
 
 * Postgre database hosted in *neon.tech*
 * Webservice hosted in *render.com*
+* All endpoints were tested with *Postman*
